@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" role="img" aria-label="Kofa">
+  <rect width="16" height="16" rx="3" fill="#3E4A38"/>
+  <rect x="3" y="3" width="10" height="3" fill="#F3EEE4"/>
+  <rect x="3" y="3" width="3" height="10" fill="#F3EEE4"/>
+  <rect x="10" y="3" width="3" height="10" fill="#F3EEE4"/>
+  <rect x="2" y="13" width="12" height="2" fill="#1A1814"/>
+</svg>

@@ -1,0 +1,36 @@
+{
+  "url": "http://127.0.0.1:8080/",
+  "viewports": {
+    "desktop": {
+      "width": 1280,
+      "height": 800,
+      "status": 200,
+      "title": "Kofa",
+      "hasCanvas": false,
+      "bodyTextLen": 2197,
+      "bodyTextHash": "9864ab32d786f8c22bf506dddfa60a0bcd46b9d83ba1be1b02d9659d9b724d22",
+      "bodyTextPrefix": "Kofa The gate The line The desk 3MTT × META · CAPSTONE ARTEFACT ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview.png"
+    },
+    "mobile": {
+      "width": 390,
+      "height": 844,
+      "status": 200,
+      "title": "Kofa",
+      "hasCanvas": false,
+      "bodyTextLen": 2197,
+      "bodyTextHash": "9864ab32d786f8c22bf506dddfa60a0bcd46b9d83ba1be1b02d9659d9b724d22",
+      "bodyTextPrefix": "Kofa The gate The line The desk 3MTT × META · CAPSTONE ARTEFACT ",
+      "horizontalOverflow": false,
+      "consoleErrors": [],
+      "pageErrors": [],
+      "screenshot": "/workspace/screenshots/app-builder-preview-mobile.png"
+    }
+  },
+  "brandWarnings": [],
+  "authWarnings": [],
+  "verdictFile": "/workspace/screenshots/app-builder-preview.json"
+}

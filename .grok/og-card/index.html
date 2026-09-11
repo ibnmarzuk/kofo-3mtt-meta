@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Kofa</title>
+    <style>
+      @font-face {
+        font-family: Fraunces;
+        font-style: normal;
+        font-weight: 600;
+        src: url("fonts/fraunces-600.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: Fraunces;
+        font-style: italic;
+        font-weight: 500;
+        src: url("fonts/fraunces-italic-500.woff2") format("woff2");
+      }
+      @font-face {
+        font-family: Figtree;
+        font-style: italic;
+        font-weight: 400;
+        src: url("fonts/figtree-italic.woff2") format("woff2");
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        width: 1200px;
+        height: 630px;
+        overflow: hidden;
+        background: #f3eee4;
+      }
+      .card {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        background:
+          radial-gradient(900px 420px at 50% 38%, #fffdf8 0%, #f3eee4 58%, #e7dfd1 100%);
+        color: #1a1814;
+      }
+      .grain {
+        position: absolute;
+        inset: 0;
+        opacity: 0.08;
+        mix-blend-mode: multiply;
+        pointer-events: none;
+        background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+      }
+      .hairline {
+        position: absolute;
+        inset: 32px;
+        border: 1px solid #d7cfc0;
+        pointer-events: none;
+      }
+      .gate {
+        position: absolute;
+        left: 260px;
+        top: 64px;
+        width: 680px;
+        height: 502px;
+      }
+      .wood-v,
+      .wood-h {
+        position: absolute;
+        background-color: #3e4a38;
+      }
+      .wood-v {
+        background-image:
+          repeating-linear-gradient(
+            90deg,
+            rgba(26, 24, 20, 0.2) 0 1px,
+            transparent 1px 17px
+          ),
+          linear-gradient(180deg, #4a5644 0%, #3e4a38 42%, #2c3428 100%);
+      }
+      .wood-h {
+        background-image:
+          repeating-linear-gradient(
+            180deg,
+            rgba(26, 24, 20, 0.18) 0 1px,
+            transparent 1px 15px
+          ),
+          linear-gradient(90deg, #2c3428 0%, #3e4a38 50%, #455240 100%);
+      }
+      .lintel {
+        left: 0;
+        top: 0;
+        width: 680px;
+        height: 76px;
+      }
+      .post-l {
+        left: 0;
+        top: 0;
+        width: 76px;
+        height: 470px;
+      }
+      .post-r {
+        right: 0;
+        top: 0;
+        width: 76px;
+        height: 470px;
+      }
+      .sill {
+        left: -14px;
+        bottom: 0;
+        width: 708px;
+        height: 32px;
+        background: #1a1814;
+      }
+      .shade {
+        position: absolute;
+        left: 76px;
+        top: 76px;
+        width: 528px;
+        height: 28px;
+        background: linear-gradient(180deg, rgba(44, 52, 40, 0.28), transparent);
+        pointer-events: none;
+      }
+      .hinge {
+        position: absolute;
+        width: 18px;
+        height: 28px;
+        background: #2c3428;
+        box-shadow: inset 0 0 0 1px rgba(243, 238, 228, 0.12);
+      }
+      .hinge.l1 { left: 29px; top: 126px; }
+      .hinge.l2 { left: 29px; top: 248px; }
+      .hinge.l3 { left: 29px; top: 370px; }
+      .hinge.r1 { right: 29px; top: 126px; }
+      .hinge.r2 { right: 29px; top: 248px; }
+      .hinge.r3 { right: 29px; top: 370px; }
+      .bolt {
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: #2c3428;
+        box-shadow: inset 0 0 0 1px rgba(243, 238, 228, 0.16);
+      }
+      .bolt.a { left: 34px; top: 34px; }
+      .bolt.b { right: 34px; top: 34px; }
+      .lockup {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 1200px;
+        height: 630px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding-bottom: 10px;
+      }
+      h1 {
+        font-family: Fraunces, "Liberation Serif", serif;
+        font-weight: 600;
+        font-optical-sizing: none;
+        font-size: 152px;
+        line-height: 0.88;
+        letter-spacing: 0.01em;
+        color: #1a1814;
+        font-variation-settings: "opsz" 144, "SOFT" 0, "WONK" 0.4;
+      }
+      .rule {
+        width: 56px;
+        height: 1px;
+        background: #6b7f62;
+        margin: 22px 0 18px;
+      }
+      p {
+        font-family: Fraunces, "Liberation Serif", serif;
+        font-style: italic;
+        font-weight: 500;
+        font-size: 28px;
+        line-height: 1.2;
+        letter-spacing: 0.02em;
+        color: #3e4a38;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="card">
+      <div class="gate" aria-hidden="true">
+        <div class="wood-h lintel"></div>
+        <div class="wood-v post-l"></div>
+        <div class="wood-v post-r"></div>
+        <div class="sill"></div>
+        <div class="shade"></div>
+        <div class="hinge l1"></div>
+        <div class="hinge l2"></div>
+        <div class="hinge l3"></div>
+        <div class="hinge r1"></div>
+        <div class="hinge r2"></div>
+        <div class="hinge r3"></div>
+        <div class="bolt a"></div>
+        <div class="bolt b"></div>
+      </div>
+      <div class="lockup">
+        <h1>Kofa</h1>
+        <div class="rule"></div>
+        <p>The shop's first line.</p>
+      </div>
+      <div class="hairline"></div>
+      <div class="grain"></div>
+    </div>
+  </body>
+</html>

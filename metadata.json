@@ -1,0 +1,8 @@
+{
+  "name": "Kofa",
+  "description": "A bounded first-line customer line and owner desk for Nigerian repair shops, answering pre-agreed FAQs with human handoff for pricing, promises, and sensitive requests.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

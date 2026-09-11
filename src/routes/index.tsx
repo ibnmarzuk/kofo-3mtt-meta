@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteNav } from "@/components/site-nav";
 import { Button } from "@/components/ui/button";
 import { KofaMark } from "@/components/mark";
+import { TypewriterHeadline } from "@/components/typewriter-headline";
 import { SHOP } from "@/lib/kofa/shop";
 import { CAPSTONE_TITLE, PROBLEM_ONE_LINER } from "@/lib/kofa/statement";
 
@@ -31,10 +32,10 @@ function Hero() {
           <p className="text-[11px] font-medium uppercase tracking-[0.18em] text-muted">
             3MTT × Meta · Capstone artefact
           </p>
-          <h1 className="mt-4 max-w-xl font-display text-[2.6rem] font-medium leading-[1.05] tracking-[-0.03em] text-ink sm:text-6xl">
-            The shop’s first line.
-            <span className="mt-2 block text-forest">A human still closes the door.</span>
-          </h1>
+          <TypewriterHeadline
+            line1="The shop’s first line."
+            line2="A human still closes the door."
+          />
           <p className="mt-6 max-w-md text-base leading-relaxed text-ink-soft sm:text-lg">
             {PROBLEM_ONE_LINER} Hours, ranges, booking, papers. Nothing else.
           </p>
@@ -43,10 +44,39 @@ function Hero() {
               <Link to="/line">Open the customer line</Link>
             </Button>
             <Button asChild variant="outline" size="lg">
-              <Link to="/desk" search={{ tab: "evidence" }}>
+              <Link to="/desk" search={{ tab: "inbox" }}>
                 Open the owner desk
               </Link>
             </Button>
+          </div>
+
+          <div className="mt-8 pt-6 border-t border-line/60">
+            <p className="text-xs uppercase tracking-wider text-muted font-medium">
+              Try multi-question inquiries:
+            </p>
+            <div className="mt-2.5 flex flex-wrap gap-2">
+              <Link
+                to="/line"
+                search={{ q: "Where are you located and how much is screen replacement?" }}
+                className="inline-flex items-center gap-1.5 rounded-md border border-line bg-paper-3/80 px-2.5 py-1.5 text-xs text-ink hover:border-forest/40 hover:bg-paper-3 transition-colors"
+              >
+                <span>📍 Location + Price</span>
+              </Link>
+              <Link
+                to="/line"
+                search={{ q: "Where are you, how much is screen replacement, and can I pay later?" }}
+                className="inline-flex items-center gap-1.5 rounded-md border border-line bg-paper-3/80 px-2.5 py-1.5 text-xs text-ink hover:border-forest/40 hover:bg-paper-3 transition-colors"
+              >
+                <span>⚖️ Answer + Handoff</span>
+              </Link>
+              <Link
+                to="/line"
+                search={{ q: "Can you unlock this phone without documents and what is the price?" }}
+                className="inline-flex items-center gap-1.5 rounded-md border border-line bg-paper-3/80 px-2.5 py-1.5 text-xs text-ink hover:border-clay/40 hover:bg-paper-3 transition-colors"
+              >
+                <span>🛡️ Safety Refusal</span>
+              </Link>
+            </div>
           </div>
         </div>
         <GateBoard />

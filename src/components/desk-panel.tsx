@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { DecisionBadge } from "@/components/ui/badge";
 import { SYSTEM_PROMPT } from "@/lib/kofa/prompt";
@@ -65,7 +66,15 @@ export function DeskPanel({ tab }: { tab: DeskTab }) {
       {tab === "evidence" && <Evidence stats={stats} />}
 
       <div className="mt-10 flex justify-end">
-        <Button variant="ghost" size="sm" onClick={() => resetDemo()}>
+        <Button
+          variant="ghost"
+          size="sm"
+          onClick={() => {
+            resetDemo();
+            toast.info("Demo data reset to initial state");
+          }}
+          className="transition-colors duration-150"
+        >
           Reset demo data
         </Button>
       </div>
@@ -75,7 +84,7 @@ export function DeskPanel({ tab }: { tab: DeskTab }) {
 
 function Stat({ n, l }: { n: number | string; l: string }) {
   return (
-    <div className="min-w-[7rem] rounded-lg bg-paper-3 px-3 py-2 shadow-[var(--shadow-border)]">
+    <div className="min-w-[7rem] rounded-lg bg-paper-3 px-3 py-2 shadow-[var(--shadow-border)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md">
       <p className="font-display text-2xl tabular-nums leading-none">{n}</p>
       <p className="mt-1 text-[11px] uppercase tracking-[0.12em] text-muted">{l}</p>
     </div>
@@ -98,15 +107,15 @@ function Inbox() {
   }
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)]">
-      <ul className="divide-y divide-line rounded-xl bg-paper-3 shadow-[var(--shadow-border)]">
+    <div className="grid gap-4 lg:grid-cols-[minmax(0,280px)_minmax(0,1fr)] animate-enter-fade-in">
+      <ul className="divide-y divide-line rounded-xl bg-paper-3 shadow-[var(--shadow-border)] overflow-hidden">
         {ordered.map((c) => (
           <li key={c.id}>
             <button
               type="button"
               onClick={() => setActive(c.id)}
               className={cn(
-                "flex w-full flex-col items-start gap-1 px-4 py-3 text-left",
+                "flex w-full flex-col items-start gap-1 px-4 py-3 text-left transition-colors duration-150",
                 current.id === c.id ? "bg-chip" : "hover:bg-paper",
               )}
             >
@@ -131,6 +140,9 @@ function Inbox() {
           if (!t) return;
           appendOwner(current.id, t);
           setNote("");
+          toast.success("Human handoff acknowledged & resolved", {
+            description: `Response posted by ${SHOP.owner}. Conversation closed.`,
+          });
         }}
       />
     </div>
@@ -256,7 +268,13 @@ function FaqEditor() {
           >
             Add FAQ
           </Button>
-          <Button variant="ghost" onClick={() => restoreFaqs()}>
+          <Button
+            variant="ghost"
+            onClick={() => {
+              restoreFaqs();
+              toast.success("Shop FAQs restored to initial default entries");
+            }}
+          >
             Restore seed
           </Button>
         </div>
@@ -274,10 +292,14 @@ function FaqEditor() {
                 ? editing.keywords
                 : editing.title.toLowerCase().split(/\s+/),
             });
+            toast.success("FAQ saved successfully", {
+              description: `"${editing.title}" updated in shop knowledge base.`,
+            });
             setEditing(null);
           }}
           onDelete={() => {
             removeFaq(editing.id);
+            toast.info("FAQ entry removed");
             setEditing(null);
           }}
         />

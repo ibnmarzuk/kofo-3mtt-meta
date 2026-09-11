@@ -32,9 +32,11 @@ const STOP = new Set([
   "dey",
   "am",
   "na",
+  "if",
+  "should",
 ]);
 
-export function tokenize(text: string) {
+export function tokenize(text: string): string[] {
   return text
     .toLowerCase()
     .replace(/₦/g, " ")
@@ -43,25 +45,70 @@ export function tokenize(text: string) {
     .filter((t) => t.length > 1 && !STOP.has(t));
 }
 
+function escapeRegex(str: string): string {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+/**
+ * Robust token-based FAQ retrieval.
+ * Matches keywords and document tokens using strict word boundaries and token sets,
+ * completely preventing substring false positives (e.g. 'inside' triggering 'id', 'repair' triggering 'pair').
+ */
 export function retrieveFaqs(query: string, faqs: FaqEntry[], k = 4) {
   const qTokens = tokenize(query);
+  const qTokenSet = new Set(qTokens);
+
+  if (!qTokens.length) return [];
+
   const scored = faqs
     .map((faq) => {
-      const hay = tokenize(
-        `${faq.title} ${faq.question} ${faq.answer} ${faq.keywords.join(" ")}`,
+      // Document text tokens (title, question, answer)
+      const docTokens = tokenize(
+        `${faq.title} ${faq.question} ${faq.answer}`,
       );
-      const haySet = new Set(hay);
-      let overlap = 0;
-      for (const t of qTokens) {
-        if (haySet.has(t)) overlap += 1;
-        else if (faq.keywords.some((kw) => kw.includes(t) || t.includes(kw))) overlap += 0.6;
+      const docTokenSet = new Set(docTokens);
+
+      // 1. Direct word-token overlap between query and document text
+      let tokenOverlap = 0;
+      for (const t of qTokenSet) {
+        if (docTokenSet.has(t)) {
+          tokenOverlap += 1.0;
+        }
       }
-      const phraseBoost = faq.keywords.some((kw) =>
-        query.toLowerCase().includes(kw.toLowerCase()),
-      )
-        ? 1.5
-        : 0;
-      return { faq, score: overlap + phraseBoost };
+
+      // 2. Strict keyword matching:
+      // - Single word keyword: MUST be an exact token in qTokenSet
+      // - Multi-word keyword phrase: MUST match with strict word boundaries (\b...\b)
+      let keywordScore = 0;
+      for (const rawKw of faq.keywords) {
+        const kw = rawKw.trim().toLowerCase();
+        if (!kw) continue;
+
+        if (!kw.includes(" ")) {
+          // Single word keyword: exact token match only - prevents 'inside' matching 'id' or 'repair' matching 'pair'
+          if (qTokenSet.has(kw)) {
+            keywordScore += 1.5;
+          }
+        } else {
+          // Multi-word phrase: match using regex word boundary
+          const phraseRegex = new RegExp(`\\b${escapeRegex(kw)}\\b`, "i");
+          if (phraseRegex.test(query)) {
+            keywordScore += 2.5;
+          }
+        }
+      }
+
+      // 3. Title token boost
+      const titleTokens = tokenize(faq.title);
+      let titleBoost = 0;
+      for (const t of titleTokens) {
+        if (qTokenSet.has(t)) {
+          titleBoost += 1.0;
+        }
+      }
+
+      const totalScore = tokenOverlap + keywordScore + titleBoost;
+      return { faq, score: totalScore };
     })
     .filter((s) => s.score > 0)
     .sort((a, b) => b.score - a.score);
@@ -80,3 +127,4 @@ export function formatRetrieved(
     )
     .join("\n\n");
 }
+

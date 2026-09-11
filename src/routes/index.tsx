@@ -253,7 +253,6 @@ function Footer() {
   return (
     <footer className="border-t border-line px-4 py-8 text-sm text-muted sm:px-6">
       <div className="mx-auto flex max-w-6xl flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <p>Kofa · SULEIMAN Abdurrahman Bature · FE/23/45768260</p>
         <p>3MTT × Meta AI Skills Development · Ilorin</p>
       </div>
     </footer>
